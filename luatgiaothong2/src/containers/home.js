@@ -13,9 +13,9 @@ var width = Dimensions.get('window').width
 var height = Dimensions.get('window').height
 import Share from 'react-native-share';
 const shareOptions = {
-    title: "React Native",
-    message: "Hola mundo",
-    url: "http://facebook.github.io/react-native/",
+    title: "Chia sẻ ứng dụng ",
+    message: "Xin mời chọn hình thức chia sẻ",
+    url: "https://github.com/Thanhvdph04418/du_an2",
     subject: "Share Link" //  for email
 }
 
@@ -23,31 +23,31 @@ var category = [
     {
         name: 'Quy tắc giao thông đường bộ',
         icon: 'ios-bus',
-        onClick: (navigation) => { navigation.navigate('listLaws') }
+        onClick: (navigation) => { navigation.navigate('listLaws', { url: 'https://chayandroid.000webhostapp.com/quytacgiaothong.php' }) }
     },
     {
         name: 'Phương tiện tham gia giao thông đường bộ',
         icon: 'ios-bicycle',
-        onClick: (navigation) => { navigation.navigate('listLaws') }
+        onClick: (navigation) => { navigation.navigate('listLaws', { url: 'https://chayandroid.000webhostapp.com/phuongtienthamgia.php' }) }
 
     },
     {
         name: 'Người điều khiển phương tiện',
         icon: 'ios-body',
-        onClick: (navigation) => { navigation.navigate('listLaws') }
+        onClick: (navigation) => { navigation.navigate('listLaws', { url: 'https://chayandroid.000webhostapp.com/nguoidieukhien.php' }) }
     },
     {
         name: 'Biển báo giao thông',
         icon: 'ios-warning',
-        onClick: (navigation) => { navigation.navigate('listLaws') }
+        onClick: (navigation) => { navigation.navigate('listLaws', { url: 'https://chayandroid.000webhostapp.com/bienbao.php', type: 'bienbao' }) }
     },
     {
         name: 'Kiểm tra khả năng nhận biết biển báo ',
         icon: 'ios-school',
-        onClick: (navigation) => { navigation.navigate('listLaws') }
+        onClick: (navigation) => { navigation.navigate('practice') }
     },
     {
-        name: 'Chia sẻ ứng dụng',
+        name: 'Thông tin ứng dụng',
         icon: 'ios-information-circle-outline',
         onClick: (navigation) => { navigation.navigate('listLaws') }
     },
@@ -76,7 +76,7 @@ export default class Home extends Component {
                         </Left>
 
                         <Body style={{ flex: 3, alignItems: 'center' }}>
-                            <Title>Luat Giao Thong</Title>
+                            <Title>Học Luật giao thông</Title>
                         </Body>
                         <Right style={{ flex: 1 }}>
                             <Button transparent>

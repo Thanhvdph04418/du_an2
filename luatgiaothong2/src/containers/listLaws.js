@@ -38,7 +38,38 @@ var category = [
     },
 ]
 export default class ListLaws extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            dataList: [],
+            isLoading: true
+        }
+    }
+
+    componentDidMount() {
+        this.getDataList()
+    }
+
+    async getDataList() {
+        try {
+            this.setState({ isLoading: true })
+            const data = await fetch(this.props.navigation.state.params.url)
+            let responseJson = await data.json();
+            console.log(responseJson)
+            this.setState({
+                dataList: responseJson
+            })
+            this.setState({ isLoading: false })
+
+        } catch (err) {
+            console.log(err)
+        }
+
+
+    }
+
     render() {
+        const { type } = this.props.navigation.state.params
         return (
             <Container
             >
@@ -58,15 +89,21 @@ export default class ListLaws extends Component {
                     </Header>
 
                     <FlatList
-                        keyExtractor={(item, index) => index + ''}
+                        onRefresh={() => { this.getDataList() }}
+                        keyExtractor={(item, index) => item.id + ''}
+                        refreshing={this.state.isLoading}
                         numColumns={1}
-                        data={category}
+                        data={this.state.dataList}
                         renderItem={({ item, index }) =>
                             <TouchableOpacity
-                                activeOpacity={0.7}
+                                onPress={() => { type ? null : this.props.navigation.navigate('textContent', { content: item.content }) }}
+                                activeOpacity={type ? 1 : 0.7}
                                 style={{ flexDirection: 'row', opacity: 0.8, backgroundColor: '#fff', width: width, height: width / 3.5, margin: 1, alignItems: 'center' }}>
-                                <Icon style={{ fontSize: 50, color: '#AA0000', flex: 1, marginLeft: 5 }} name={item.icon} />
-                                <Text style={{ fontSize: 20, color: '#111111', textAlign: 'left', flex: 5 }}>{item.name}</Text>
+                                {type ?
+                                    <Image source={{ uri: item.image }} style={{ width: 100, height: 100 }} /> :
+                                    <Icon style={{ fontSize: 50, color: '#AA0000', flex: 1, marginLeft: 5 }} name='ios-medal' />
+                                }
+                                <Text style={{ fontSize: type ? 15 : 20, color: '#111111', textAlign: 'left', flex: 5 }}>{item.title}</Text>
                             </TouchableOpacity >
                         }
                     />
