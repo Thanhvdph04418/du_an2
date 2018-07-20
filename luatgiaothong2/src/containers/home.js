@@ -6,7 +6,9 @@ import {
     Image,
     Dimensions,
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
+    BackHandler,
+    Alert
 } from 'react-native';
 import { Container, Header, Body, Title, Left, Right, Button, Icon, Content } from 'native-base';
 var width = Dimensions.get('window').width
@@ -49,13 +51,25 @@ var category = [
     {
         name: 'Thông tin ứng dụng',
         icon: 'ios-information-circle-outline',
-        onClick: (navigation) => { navigation.navigate('listLaws') }
+        onClick: (navigation) => { navigation.navigate('info') }
     },
 ]
 export default class Home extends Component {
 
 
 
+    handlExit = () => {
+        Alert.alert(
+            'Thông báo',
+            'Bạn có muốn thoát ?',
+            [
+
+                { text: 'Đóng', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                { text: 'Thoát', onPress: () => BackHandler.exitApp() },
+            ],
+            { cancelable: false }
+        )
+    }
 
     render() {
         return (
@@ -79,7 +93,7 @@ export default class Home extends Component {
                             <Title>Học Luật giao thông</Title>
                         </Body>
                         <Right style={{ flex: 1 }}>
-                            <Button transparent>
+                            <Button transparent onPress={() => { this.handlExit() }}>
                                 <Icon name='ios-power' />
                             </Button>
                         </Right>

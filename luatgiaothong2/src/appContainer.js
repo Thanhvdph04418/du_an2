@@ -6,7 +6,7 @@ import Home from './containers/home'
 import ListLaws from './containers/listLaws'
 import Practice from './containers/practice'
 import TextContent from './containers/content'
-
+import Info from './containers/info'
 import { StackNavigator } from 'react-navigation'
 
 
@@ -22,6 +22,9 @@ const AppNavigator = StackNavigator({
     },
     textContent: {
         screen: TextContent
+    },
+    info: {
+        screen: Info
     },
 
 }, {

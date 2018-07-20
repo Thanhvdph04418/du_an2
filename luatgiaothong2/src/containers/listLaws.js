@@ -11,38 +11,15 @@ import {
 import { Container, Header, Body, Title, Left, Right, Button, Icon, Content, Item, Input } from 'native-base';
 var width = Dimensions.get('window').width
 var height = Dimensions.get('window').height
-var category = [
-    {
-        name: 'Quy tắc giao thông đường bộ',
-        icon: 'ios-medal'
-    },
-    {
-        name: 'Phương tiện tham gia giao thông đường bộ',
-        icon: 'ios-medal'
-    },
-    {
-        name: 'Người điều khiển phương tiện',
-        icon: 'ios-medal'
-    },
-    {
-        name: 'Biển báo giao thông',
-        icon: 'ios-medal'
-    },
-    {
-        name: 'Kiểm tra khả năng nhận biết biển báo adsadadsd sadsadsad adsadas ',
-        icon: 'ios-medal'
-    },
-    {
-        name: 'Chia sẻ ứng dụng',
-        icon: 'ios-medal'
-    },
-]
+import SearchInput, { createFilter } from 'react-native-search-filter';
+const KEYS_TO_FILTERS = ['title'];
 export default class ListLaws extends Component {
     constructor(props) {
         super(props)
         this.state = {
             dataList: [],
-            isLoading: true
+            isLoading: true,
+            valueSearch: ''
         }
     }
 
@@ -69,6 +46,7 @@ export default class ListLaws extends Component {
     }
 
     render() {
+        const filteredData = this.state.dataList.filter(createFilter(this.state.valueSearch, KEYS_TO_FILTERS))
         const { type } = this.props.navigation.state.params
         return (
             <Container
@@ -80,7 +58,7 @@ export default class ListLaws extends Component {
                     >
                         <Item>
                             <Icon onPress={() => { this.props.navigation.pop() }} name="ios-arrow-back" />
-                            <Input placeholder="Search" />
+                            <Input onChangeText={(text) => { this.setState({ valueSearch: text }) }} placeholder="Search" />
                             <Icon name="ios-search" />
                         </Item>
                         <Button transparent>
@@ -93,7 +71,7 @@ export default class ListLaws extends Component {
                         keyExtractor={(item, index) => item.id + ''}
                         refreshing={this.state.isLoading}
                         numColumns={1}
-                        data={this.state.dataList}
+                        data={filteredData}
                         renderItem={({ item, index }) =>
                             <TouchableOpacity
                                 onPress={() => { type ? null : this.props.navigation.navigate('textContent', { content: item.content }) }}
